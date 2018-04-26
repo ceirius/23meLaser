@@ -12,148 +12,103 @@ class Maze(object):
 		self.x = x
 		self.y = y
 		self.output = output
-	
+
+	"""
+	Four similar functions are defined labeled north, south east and west. The first call to any one of these functions is from within main(). 
+	If next coordinate is not within array the program ends. The next position in the grid (depending on the direction) is evaluated. If that position is empty or within the grid, the step counter and coordinate are adjusted accordingly. Immediately the new position is evaluated for mirror type, and coordinates and counters are passed to the respective function. If an edge cell is reached or if counter reached a defined limit (20), then end() is called.
+	"""
 	def west(self, direction, start_x, start_y, step_count):
-		if start_x - 1 >= 0:																# testing if within bounds
-			while self.maze[start_x - 1][start_y] == 0 or start_x - 1 >= 0:						# testing for no mirror
-				#print(direction, start_x, start_y, step_count, "\n\n")						# move player
+		if start_x - 1 >= 0:																
+			while self.maze[start_x - 1][start_y] == 0 or start_x - 1 >= 0:					
 				start_x -= 1
-				step_count += 1																# increase cell counter by one
-				print("nineteen", start_x, start_y, step_count, "\n\n")
-				if self.maze[start_x][start_y] != 0:
-					if self.maze[start_x][start_y] == "\\":
-						direction = 'N'
-						print("eighteen")
-						self.north(direction, start_x, start_y, step_count)	
-						
-					elif self.maze[start_x][start_y] == "/":
-						direction = 'S'
-						print("seventeen")
-						self.south(direction, start_x, start_y, step_count)		
-						
-				elif self.maze[start_x][start_y] == 0 and start_x == 0 or step_count == 20: 	
-					print("sisteen")
+				step_count += 1																
+				if self.maze[start_x][start_y] == "\\":
+					direction = 'N'
+					self.north(direction, start_x, start_y, step_count)	
+				elif self.maze[start_x][start_y] == "/":
+					direction = 'S'
+					self.south(direction, start_x, start_y, step_count)		
+				elif start_x - 1 < 0 or step_count == 20: 	
 					self.end(start_x, start_y, step_count)
-					break				
 		elif start_x - 1 < 0 or step_count == 20: 	
-			print("tw3 two")
 			self.end(start_x, start_y, step_count)				
 
 	def east(self, direction, start_x, start_y, step_count):
-		if start_x + 1 < self.x:																	# testing if within bounds
-			while self.maze[start_x + 1][start_y] == 0 or start_x + 1 < self.x:						# testing for no mirror
-				print(">>>", direction, start_x, start_y, step_count, "\n\n")						# move player
+		if start_x + 1 < self.x:														
+			while self.maze[start_x + 1][start_y] == 0 or start_x + 1 < self.x:			
 				start_x += 1
-				step_count += 1																# increase cell counter by one
-				print("fifteen", start_x, start_y, step_count, "\n\n")
+				step_count += 1															
 				if self.maze[start_x][start_y] == '\\':
 					direction = 'S'
-					print("fourteen")
 					self.south(direction, start_x, start_y, step_count)				
 				elif self.maze[start_x][start_y] == '/':
 					direction = 'N'
-					print("thirteen")
 					self.north(direction, start_x, start_y, step_count)		
-				elif start_x + 1 > self.x - 1: 	
-					print("twelve")
+				elif start_x + 1 > self.x - 1 or step_count == 20: 	
 					self.end(start_x, start_y, step_count)	
-					break
 		elif start_x + 1 > self.x - 1 or step_count == 20: 	
-			print("tw2 one")
 			self.end(start_x, start_y, step_count)
 				
 	def north(self, direction, start_x, start_y, step_count):
-	"""
-	
-	"""
-		#while direction == 'N':															# this line is redundant
-		#next_y = start_y + 1
-		#print("\n", start_y, ", ", start_y+1, ", ", next_y, y, ", ", y-1,"\n\n", maze[start_x][start_y], ",", maze[start_x][start_y + 1], "\n")
-		#print(start_x, start_y, "\n\n")
-		
-		if start_y + 1 < self.y:																	# testing if within bounds
-			while self.maze[start_x][start_y + 1] == 0 or start_y + 1 < self.y:						# testing for no mirror
-				#print(direction, start_x, start_y, step_count, "\n\n")						# move player
+
+		if start_y + 1 < self.y:														
+			while self.maze[start_x][start_y + 1] == 0 or start_y + 1 < self.y:			
 				start_y += 1
-				step_count += 1																# increase cell counter by one
-				print("eleven", start_x, start_y, step_count, "\n\n")
+				step_count += 1															
 				if self.maze[start_x][start_y] == '\\':
 					direction = 'W'
-					print("ten")
 					self.west(direction, start_x, start_y, step_count)				
 				elif self.maze[start_x][start_y] == '/':
 					direction = 'E'
-					print("nine")
 					self.east(direction, start_x, start_y, step_count)		
 				elif start_y + 1 >= self.y-1 or step_count == 20: 	
-					print("eight")
 					self.end(start_x, start_y, step_count)
-					break
 		elif start_y + 1 >= self.y-1 or step_count == 20: 	
-			print("twenty")
 			self.end(start_x, start_y, step_count)
-
 							
 	def south(self, direction, start_x, start_y, step_count):
-		if start_y - 1 >= 0:																# testing if within bounds
-			while self.maze[start_x][start_y - 1] == 0 or start_y - 1 >= 0:						# testing for no mirror
-				#print("one", direction, start_x, start_y, step_count, "\n\n")				# move player
+		if start_y - 1 >= 0:																
+			while self.maze[start_x][start_y - 1] == 0 or start_y - 1 >= 0:					
 				start_y -= 1
-				step_count += 1																# increase cell counter by one
-				print("two", start_x, start_y, self.maze[start_x][start_y], step_count, "\n\n")
-
+				step_count += 1																
 				if self.maze[start_x][start_y] == '\\':
 					direction = 'E'
-					print("three")
 					self.east(direction, start_x, start_y, step_count)				
 				elif self.maze[start_x][start_y] == '/':
 					direction = 'W'
-					print("four")
 					self.west(direction, start_x, start_y, step_count)		
 				elif start_y - 1 < 0 or step_count == 20: 	
-					print("seven")
 					self.end(start_x, start_y, step_count)
-					break
 		elif start_y - 1 < 0 or step_count == 20: 	
-			print("tw4 four")
 			self.end(start_x, start_y, step_count)
 
+		"""
+		end() is called and outputs counters to output file. File is closed.
+		An exit() is forced to prevent the end of loops from reverting to their 
+		initiation points and erroneously running counters.
+		"""
+		
 	def end(self, start_x, start_y, step_count):
 		fileout = open(self.output, 'w')
-		if (start_x == 0 or start_x == self.x-1 or start_y == 0 or start_y == self.y-1):				# if player exits any matrix boundary
+		if (start_x == 0 or start_x == self.x-1 or start_y == 0 or start_y == self.y-1):				
 			fileout.write("".join(str(x) for x in (step_count, "\n", start_x, " , ", start_y)))
-			#run(step_count, start_x, start_y)
-			print("five")
 		else:
 			fileout.write("".join(str(x) for x in ("-1", "\n", start_x, " , ", start_y)))
-			#run(step_count, start_x, start_y)
-			print("six")
 		fileout.close()
 		sys.exit()
-		
-def run(args):
-	filename = open(args.input) 										
-	output_filename = args.output 										
-	fout = open(args.output, 'w')
-	#fout.write(str(step_count), '\n')
-	#fout.write(str(start_x), str(start_y))
-	fout.close()
-	
 
+"""
+main() defines the arguments that are taken in from command line. The input file is used to populate the array elements with 0s and then mirrors are populated into the array.
+
+"""
 def main():
 	parser=argparse.ArgumentParser(description="Fire a laser through a maze")
 	parser.add_argument("-in",help="txt input file" ,dest="input", type=str, required=True)
 	parser.add_argument("-out",help="txt output filename" ,dest="output", type=str, required=True)
-	#parser.set_defaults(func=run)
 	args=parser.parse_args()
-	#args.func(args)
-
-
-	#filename = input("enter a valid file name:   ")
-	#print(args.input)
+	
 	fileinp = open(args.input,'r')
-	input_data = []																			# to hold all data for easy parsing
-
+	input_data = []																			
 
 	for line in fileinp:
 		data = line.strip("\n").split(" ")							
@@ -161,39 +116,37 @@ def main():
 		
 	fileinp.close()
 
+	"""
+	dimensions, starting coordinates and initial laser direction are defined.
+	"""
 	x = int(input_data[0][0])
 	y = int(input_data[0][1])
-	start_x = int(input_data[1][0])															# coordinates for start position and subsequent player movements
+	start_x = int(input_data[1][0])
 	start_y = int(input_data[1][1])
-	direction = input_data[1][2].rstrip()													# direction of laser
+	direction = input_data[1][2].rstrip()												
 
-
-	maze = [0] * int(x)																		# creating 2D list/array
-	for i in range(int(x)):																	# The matrix is created here and populated by 0s 
+	"""
+	maze array is created
+	"""
+	maze = [0] * int(x)																	
+	for i in range(int(x)):																
 		maze[i] = [0] * int(y)
-
 		
 	count = len(input_data)
 
-	for i in range(2, count - 1):															# assigning mirrors to matrix
-		mirror_x = int(input_data[i][0])													# mirror coordinates
+	"""
+	mirrors are populated
+	"""
+	for i in range(2, count - 1):														
+		mirror_x = int(input_data[i][0])												
 		mirror_y = int(input_data[i][1])
-		#print (mirror_x, mirror_y)
 		maze[mirror_x][mirror_y] = input_data[i][2].rstrip()
 		
-
-	for i in range(int(x)):
-		print(maze[i])
-		
-	#print(maze)
-	print(maze[mirror_x][mirror_y] + "\t" + input_data[3][2], "count = ",count)
-	# define function or object that instructs conditions for reaction between laser and mirror and resulting direction	
-
 	step_count = 0
 
 	mz = Maze(maze, x, y, args.output)
-	if start_x >= 0 or start_x < x or start_y >= 0 or start_y < y and step_count < 20:		# while player is in matrix bounds and step count < 20 
-		if direction == 'S':																# call respective direction functions 
+	if start_x >= 0 or start_x < x or start_y >= 0 or start_y < y and step_count < 20:		
+		if direction == 'S':																
 			mz.south(direction, start_x, start_y, step_count)
 		elif direction == 'N':
 			mz.north(direction, start_x, start_y, step_count)
@@ -204,5 +157,3 @@ def main():
 	
 if __name__=="__main__":
 	main() 
-	
-
